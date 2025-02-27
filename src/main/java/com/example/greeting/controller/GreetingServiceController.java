@@ -1,9 +1,8 @@
 package com.example.greeting.controller;
 
+import com.example.greeting.DTO.DTOUser;
 import com.example.greeting.service.GreetingService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/greeting")
@@ -17,7 +16,19 @@ public class GreetingServiceController {
 
     @GetMapping
     public String getGreeting(){
+
         return greetingService.getGreetingMessage();
+    }
+
+    //UC-3
+    @GetMapping("/name")
+    public String getCustomGreetingMessage(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName){
+        return greetingService.customerGreetingMessage(firstName,lastName);
+    }
+
+    @PostMapping("/post")
+    public String getCustomGreetingMessageWithPost(@RequestBody DTOUser user){
+        return greetingService.customerGreetingMessage(user.getFirstName(), user.getLastName());
     }
 
 }
